@@ -8,7 +8,7 @@ dotenv.config({ path: envPath });
 
 /** App Environment */
 export const ENV = cleanEnv(process.env, {
-  PORT: num({ default: 3000 }),
+  PORT: num({ default: 3001 }),
 
   DATA_KEEP_SECONDS: num({
     default: 60 * 60 * 24,
