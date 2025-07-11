@@ -68,7 +68,7 @@ You can upload any daty you want as long as it can be serialized to a `JsonValue
 **API Endpoint:** `POST /api/data`
 
 **Request Body:**
-```json
+```jsonc
 {
   "data": {
     // some very large json object
@@ -78,7 +78,7 @@ You can upload any daty you want as long as it can be serialized to a `JsonValue
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "id": "string",
   "createdAt": "2025-07-11T17:48:03.643Z",
@@ -95,7 +95,7 @@ You can fetch your created data using the ID. If the data was created with `dele
 **API Endpoint:** `GET /api/data/:id`
 
 **Response:**
-```json
+```jsonc
 {
   "id": "string",
   "createdAt": "2025-07-11T17:48:36.009Z",
@@ -111,7 +111,7 @@ You can fetch your created data using the ID. If the data was created with `dele
 **API Endpoint:** `DELETE /api/data/:id`
 
 **Response:**
-```json
+```jsonc
 {
   "id": "string",
   "createdAt": "2025-07-11T17:48:36.009Z",
@@ -128,7 +128,7 @@ Use this endpoint to print any website to PDF.
 **API Endpoint:** `GET /api/pdf`
 
 **Request Body:**
-```json
+```jsonc
 {
   // The URL of the page to print.
   "url": "https://google.com",
