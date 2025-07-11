@@ -14,6 +14,7 @@ model Data {
   id        String   @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())
 
+  deleteAfterUse Boolean @default(true) @db.Boolean
   json Json @db.JsonB
 
   @@map("data")

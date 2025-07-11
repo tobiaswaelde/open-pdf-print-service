@@ -1,11 +1,11 @@
 import { DocumentBuilder } from '@nestjs/swagger';
-import { ENV } from './env';
 
 export const swaggerConfig = new DocumentBuilder()
   .setTitle(process.env.npm_package_name)
   .setDescription(process.env.npm_package_description)
   .setVersion(process.env.npm_package_version)
   .addBearerAuth({ type: 'apiKey', in: 'header', name: 'authorization' })
+  // .addApiKey({ type: 'apiKey', in: 'header', name: 'authorization' })
   .build();
 
 export const swaggerTheme = `a { color: #8c8cfa; }
