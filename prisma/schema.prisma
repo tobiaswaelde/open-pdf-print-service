@@ -1,0 +1,9 @@
+generator client {
+  provider = "sqlite"
+  url = "file:./data.db"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./data.db"
+}
