@@ -4,6 +4,7 @@ import { prismaModuleOptions } from './config/db';
 import { ScheduleModule } from '@nestjs/schedule';
 import { HealthModule } from './modules/health/health.module';
 import { DataModule } from './modules/data/data.module';
+import { PdfModule } from './modules/pdf/pdf.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { DataModule } from './modules/data/data.module';
     HealthModule,
     // modules
     DataModule,
+    PdfModule,
   ],
   controllers: [],
   providers: [],
