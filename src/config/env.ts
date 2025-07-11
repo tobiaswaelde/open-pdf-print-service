@@ -23,7 +23,7 @@ export const ENV = cleanEnv(process.env, {
   }), // 1 day
   PUPPETEER_TIMEOUT: num({
     default: 60 * 1000,
-    desc: 'Timeout for Puppeteer operations in milliseconds.',
+    desc: 'Timeout for Puppeteer browser launch in milliseconds.',
   }), // 1 minute
   KEEP_BROWSER_OPEN_SECONDS: num({
     default: 10,

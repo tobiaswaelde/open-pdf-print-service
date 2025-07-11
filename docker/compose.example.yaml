@@ -1,0 +1,24 @@
+name: open-pdf-print-service
+
+services:
+  db:
+    container_name: postgres
+    image: postgres:17
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/posgresql/data/pgdata
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+  pdf-print-service:
+    container_name: pdf-print-service
+    image: ghcr.io/tobiaswaelde/open-pdf-print-service:latest
+    depends_on:
+      - db
+    ports:
+      - 3001:3001
+    environment:
+      #TODO
