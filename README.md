@@ -74,7 +74,7 @@ You can upload any daty you want as long as it can be serialized to a `JsonValue
 **Request Body:**
 ```jsonc
 {
-  "data": {
+  "json": {
     // some very large json object
   },
   "deleteAfterUse": true, // if set to true, data will be deleted after retrieved using GET /api/data/:id
