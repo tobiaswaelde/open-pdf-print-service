@@ -4,7 +4,10 @@
 ![Docker Deploy](https://github.com/tobiaswaelde/open-pdf-print-service/actions/workflows/deploy.yml/badge.svg)
 ![Version](https://img.shields.io/github/v/tag/tobiaswaelde/open-pdf-print-service?label=version)
 
-A lightweight service that takes a URL and generates a downloadable PDF file from its rendered content.
+**Open PDF Print Service** is a lightweight and flexible web service that generates PDF documents from any public or protected webpage. It supports advanced rendering options using [Puppeteer](https://pptr.dev/), stores large datasets temporarily for dynamic pages, and offers multiple output formats including direct downloads and base64 responses. 
+
+Whether you're building custom reports, archiving dynamic dashboards, or simply need a print-ready version of a webpage, this tool provides a highly configurable and developer-friendly API to get the job done.
+
 
 ## 📚 Table Of Contents <!-- omit in toc -->
 - [✨ Features](#-features)
@@ -12,31 +15,39 @@ A lightweight service that takes a URL and generates a downloadable PDF file fro
   - [🌍 Environment Variables](#-environment-variables)
 - [🚀 Installation](#-installation)
   - [Using Docker](#using-docker)
-  - [Local (Node.js example)](#local-nodejs-example)
+  - [Local Development (Node.js)](#local-development-nodejs)
 - [📡 API Usage](#-api-usage)
   - [Data](#data)
-  - [PDF](#pdf)
+  - [PDF Print](#pdf-print)
 - [📦 Changelog](#-changelog)
+- [🧩 License](#-license)
+- [🛠️ Contributing](#️-contributing)
 
 
 
 ## ✨ Features
-- 🔗 Generate a downloadable PDF from any given URL
-- 🗃️ Temporarily store data in a database to fetch later during rendering
-- 🖨️ Flexible print options:
-  - Page size (e.g. A4, Letter)
-  - Landscape or portrait
-  - With or without default header and footer
+
+- 🔗 Convert any valid URL into a downloadable PDF
+- 💾 Store and retrieve complex data via the API for use during rendering
+- 🖨️ Advanced PDF print options:
+  - Custom page sizes (A4, Letter, etc.)
+  - Landscape or portrait orientation
+  - Header/footer display control
   - Custom margins
-  - *and more (see below)*
+  - Background rendering options
+  - Element wait selectors
 - 📤 Multiple output formats:
   - File download
   - Raw text content
   - Base64-encoded string
+- 🔐 Optional token-based endpoint protection
+
 
 
 ## ⚙️ Configuration
+
 ### 🌍 Environment Variables
+
 | Variable                  | Type     | Required | Default Value | Description                                               |
 | ------------------------- | -------- | -------- | ------------- | --------------------------------------------------------- |
 | PORT                      | `number` | no       | `3001`        | The port the webserver should listen to.                  |
@@ -46,30 +57,40 @@ A lightweight service that takes a URL and generates a downloadable PDF file fro
 | DATA_KEEP_SECONDS         | `number` | no       | `86400`       | Number of seconds to keep created data in DB.             |
 | PUPPETEER_TIMEOUT         | `number` | no       | `60000`       | Timeout for Puppeteer browser launch in milliseconds.     |
 | KEEP_BROWSER_OPEN_SECONDS | `number` | no       | `10`          | Number of seconds to keep browser open after printing.    |
-|                           |          |          |               |                                                           |
+
 
 
 ## 🚀 Installation
-### Using Docker
-Check out the example [compose.yaml](./docker/compose.example.yaml) for a basic deployment setup.
 
-### Local (Node.js example)
+### Using Docker
+
+Use the example [`compose.yaml`](./docker/compose.example.yaml) to spin up the service with Docker.
+
+```bash
+docker compose -f ./docker/compose.example.yaml up -d
+```
+
+
+### Local Development (Node.js)
 ```sh
 yarn install
 yarn build
 node ./build/index.js
 ```
 
+
+
 ## 📡 API Usage
-For a interactive documentation & testing suite using Swgger, check out the OpenAPI documentation on `http://localhost:3001/api`.
+
+The API is documented with Swagger/OpenAPI and can be viewed at: `http://localhost:3001/api`.
 
 ### Data
-If the website you want to print, needs a lot of data and the data is too much to pass over query params, you can temporary store your data using the API.
+Use these endpoints to upload large JSON data that cannot be passed through a query string. This data can then be accessed by the frontend of the rendered page before printing.
 
 #### Create data
-You can upload any daty you want as long as it can be serialized to a `JsonValue` (`string`, `number`, `boolean`, `object`).
+Use these endpoints to upload large JSON data that cannot be passed through a query string. This data can then be accessed by the frontend of the rendered page before printing.
 
-**API Endpoint:** `POST /api/data`
+**POST** `/api/data`
 
 **Request Body:**
 ```jsonc
@@ -77,14 +98,14 @@ You can upload any daty you want as long as it can be serialized to a `JsonValue
   "json": {
     // some very large json object
   },
-  "deleteAfterUse": true, // if set to true, data will be deleted after retrieved using GET /api/data/:id
+  "deleteAfterUse": true, // (optional, default: true) if set to true, data will be deleted after retrieved using GET /api/data/:id
 }
 ```
 
 **Response:**
 ```jsonc
 {
-  "id": "string",
+  "id": "00000000-0000-0000-0000-000000000000",
   "createdAt": "2025-07-11T17:48:03.643Z",
   "deleteAfterUse": true,
   "json": {
@@ -94,14 +115,14 @@ You can upload any daty you want as long as it can be serialized to a `JsonValue
 ```
 
 #### Get data
-You can fetch your created data using the ID. If the data was created with `deleteAfterUse: true`, it will now be deleted.
+Retrieves the uploaded data by ID. If `deleteAfterUse` was set, the data is deleted after retrieval.
 
-**API Endpoint:** `GET /api/data/:id`
+**GET** `/api/data/:id`
 
 **Response:**
 ```jsonc
 {
-  "id": "string",
+  "id": "00000000-0000-0000-0000-000000000000",
   "createdAt": "2025-07-11T17:48:36.009Z",
   "deleteAfterUse": true,
   "json": {
@@ -111,13 +132,14 @@ You can fetch your created data using the ID. If the data was created with `dele
 ```
 
 #### Delete data
+Deletes the uploaded data manually.
 
-**API Endpoint:** `DELETE /api/data/:id`
+**DELETE** `/api/data/:id`
 
 **Response:**
 ```jsonc
 {
-  "id": "string",
+  "id": "00000000-0000-0000-0000-000000000000",
   "createdAt": "2025-07-11T17:48:36.009Z",
   "deleteAfterUse": true,
   "json": {
@@ -126,68 +148,65 @@ You can fetch your created data using the ID. If the data was created with `dele
 }
 ```
 
-### PDF
+### PDF Print
 Use this endpoint to print any website to PDF.
 
-**API Endpoint:** `GET /api/pdf`
+**GET** `/api/pdf`
 
 **Request Body:**
 ```jsonc
 {
-  // The URL of the page to print.
   "url": "https://google.com",
-
-  // The page format. One of `letter`, `legal`, `tabloid`, `ledger`, `a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`. Default: `a4`
   "format": "a4",
-
-  // If `true` the page will be printed in landscape mode.
   "landscape": false,
-
-  // Custom page margins.
   "margins": {
     "top": "2.5cm",
     "bottom": "3%",
     "left": "20px",
     "right": 5
   },
-
-  // If `true`, display the default header and footer containing e.g. filename and timestamp.
   "displayHeaderFooter": true,
-
-  // If `true`, backfground will be omitted.
   "omitBackground": false,
-
-  // If `true`, background graphics will be printed.
   "printBackground": true,
-
-  // Wait for the given selector until PDF generation starts.
   "waitForSelector": "body.ready", // would wait for a body tag with class="ready"
-
-  // If `true` the result will be the file content as Base64.
   "base64": false,
-
-  // If set, the browser will attempt to download the file (only if `base64`=`false`).
   "filename": "google", // file will be downloaded as "google.pdf"
 }
 ```
 
 ##### PrintOptionsDto
-| Property  | Data type                 | Required | Default Value | Description                                                                                                             |
-| --------- | ------------------------- | -------- | ------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| url       | `string`                  | yes      |               | The URL of the page to print.                                                                                           |
-| format    | `string`                  | no       | `a4`          | The page format. One of `letter`, `legal`, `tabloid`, `ledger`, `a0`, `a1`, `a2`, `a3`, `a4`, `a5`, `a6`. Default: `a4` |
-| landscape | `boolean`                 | no       | `false`       | If `true` the page will be printed in landscape mode.                                                                   |
-| margins   | [MarginsDto](#marginsdto) |          |               | Custom page margins.                                                                                                    |
-|           |                           |          |               |                                                                                                                         |
-|           |                           |          |               |                                                                                                                         |
+| Property            | Type                      | Required | Default | Description                                                                                                                |
+| ------------------- | ------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| url                 | `string`                  | yes      |         | The URL of the page to print.                                                                                              |
+| format              | `string`                  | no       | `a4`    | The page format. One of `letter` \|`legal` \|`tabloid` \|`ledger` \|`a0` \|`a1` \|`a2` \|`a3` \|`a4` \|`a5` \|`a6`.        |
+| landscape           | `boolean`                 | no       | `false` | If `true` the page will be printed in landscape mode.                                                                      |
+| margins             | [MarginsDto](#marginsdto) | no       |         | Custom page margins.                                                                                                       |
+| displayHeaderFooter | `boolean`                 | no       | `true`  | If `true`, display the default header and footer containing e.g. filename and timestamp.                                   |
+| omitBackground      | `boolean`                 | no       | `false` | If `true`, backfground will be omitted.                                                                                    |
+| printBackground     | `boolean`                 | no       | `false` | If `true`, background graphics will be printed.                                                                            |
+| waitForSelector     | `string`                  | no       |         | Wait for the given selector until PDF generation starts.                                                                   |
+| base64              | `boolean`                 | no       | `false` | If `true` the result will be the file content as Base64.                                                                   |
+| filename            | `string`                  | no       |         | If set, the browser will attempt to download the file (only if `base64`=`false`). You probably need to omit the extension. |
 
 ##### MarginsDto
-| Property | Data type            | Required | Description |
-| -------- | -------------------- | -------- | ----------- |
-| top      | `string` \| `number` | no       |             |
-| bottom   | `string` \| `number` | no       |             |
-| left     | `string` \| `number` | no       |             |
-| right    | `string` \| `number` | no       |             |
+| Property | Type                 | Required | Description                                                       |
+| -------- | -------------------- | -------- | ----------------------------------------------------------------- |
+| top      | `string` \| `number` | no       | Top page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).    |
+| bottom   | `string` \| `number` | no       | Bottom page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`). |
+| left     | `string` \| `number` | no       | Left page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).   |
+| right    | `string` \| `number` | no       | Right page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).  |
+
+
 
 ## 📦 Changelog
 See the [CHANGELOG.md](./CHANGELOG.md) for details on what’s new in recent versions.
+
+
+
+## 🧩 License
+MIT – feel free to use, adapt, and contribute.
+
+
+
+## 🛠️ Contributing
+Issues and PRs are welcome! If you find a bug or have a feature request, open an [issue](https://github.com/tobiaswaelde/open-pdf-print-service/issues).
