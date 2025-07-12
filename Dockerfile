@@ -13,6 +13,9 @@ RUN apk update && apk add --no-cache yarn
 COPY package.json /app/package.json
 RUN ["yarn", "install"]
 
+# generate prisma client types
+RUN ["yarn", "prisma", "generate"]
+
 # build app
 COPY . /app
 RUN ["yarn", "build"]
