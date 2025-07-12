@@ -2,7 +2,7 @@
 
 ![Docker Build](https://github.com/tobiaswaelde/open-pdf-print-service/actions/workflows/build.yml/badge.svg)
 ![Docker Deploy](https://github.com/tobiaswaelde/open-pdf-print-service/actions/workflows/deploy.yml/badge.svg)
-![Version](https://img.shields.io/github/v/tag/tobiaswaelde/open-pdf-print-service?label=version)
+![Version](https://img.shields.io/github/v/tag/tobiaswaelde/open-pdf-print-service?label=tag)
 
 **Open PDF Print Service** is a lightweight and flexible web service that generates PDF documents from any public or protected webpage. It supports advanced rendering options using [Puppeteer](https://pptr.dev/), stores large datasets temporarily for dynamic pages, and offers multiple output formats including direct downloads and base64 responses. 
 
