@@ -178,7 +178,7 @@ Use this endpoint to print any website to PDF.
 | Property            | Type                      | Required | Default | Description                                                                                                                |
 | ------------------- | ------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
 | url                 | `string`                  | yes      |         | The URL of the page to print.                                                                                              |
-| format              | `string`                  | no       | `a4`    | The page format. One of `letter` \|`legal` \|`tabloid` \|`ledger` \|`a0` \|`a1` \|`a2` \|`a3` \|`a4` \|`a5` \|`a6`.        |
+| format              | `string`                  | no       | `'a4'`  | The page format. One of `letter` \|`legal` \|`tabloid` \|`ledger` \|`a0` \|`a1` \|`a2` \|`a3` \|`a4` \|`a5` \|`a6`.        |
 | landscape           | `boolean`                 | no       | `false` | If `true` the page will be printed in landscape mode.                                                                      |
 | margins             | [MarginsDto](#marginsdto) | no       |         | Custom page margins.                                                                                                       |
 | displayHeaderFooter | `boolean`                 | no       | `true`  | If `true`, display the default header and footer containing e.g. filename and timestamp.                                   |
