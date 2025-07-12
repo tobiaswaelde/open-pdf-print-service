@@ -49,14 +49,14 @@ Whether you're building custom reports, archiving dynamic dashboards, or simply 
 ### 🌍 Environment Variables
 
 | Variable                  | Type     | Required | Default Value | Description                                               |
-| ------------------------- | -------- | -------- | ------------- | --------------------------------------------------------- |
-| PORT                      | `number` | no       | `3001`        | The port the webserver should listen to.                  |
-| DATABASE_URL              | `string` | yes      |               | The database URL.                                         |
-| SHADOW_DATABASE_URL       | `string` | yes      |               | The shadow database URL (used for migrations).            |
-| API_TOKEN                 | `string` | no       |               | If set, the `/data` & `/pdf` endpoints will be protected. |
-| DATA_KEEP_SECONDS         | `number` | no       | `86400`       | Number of seconds to keep created data in DB.             |
-| PUPPETEER_TIMEOUT         | `number` | no       | `60000`       | Timeout for Puppeteer browser launch in milliseconds.     |
-| KEEP_BROWSER_OPEN_SECONDS | `number` | no       | `10`          | Number of seconds to keep browser open after printing.    |
+| ------------------------- | -------- | :------: | ------------- | --------------------------------------------------------- |
+| PORT                      | `number` |    ❌     | `3001`        | The port the webserver should listen to.                  |
+| DATABASE_URL              | `string` |    ✅     |               | The database URL.                                         |
+| SHADOW_DATABASE_URL       | `string` |    ✅     |               | The shadow database URL (used for migrations).            |
+| API_TOKEN                 | `string` |    ❌     |               | If set, the `/data` & `/pdf` endpoints will be protected. |
+| DATA_KEEP_SECONDS         | `number` |    ❌     | `86400`       | Number of seconds to keep created data in DB.             |
+| PUPPETEER_TIMEOUT         | `number` |    ❌     | `60000`       | Timeout for Puppeteer browser launch in milliseconds.     |
+| KEEP_BROWSER_OPEN_SECONDS | `number` |    ❌     | `10`          | Number of seconds to keep browser open after printing.    |
 
 
 
@@ -176,25 +176,25 @@ Use this endpoint to print any website to PDF.
 
 ##### PrintOptionsDto
 | Property            | Type                      | Required | Default | Description                                                                                                                |
-| ------------------- | ------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
-| url                 | `string`                  | yes      |         | The URL of the page to print.                                                                                              |
-| format              | `string`                  | no       | `'a4'`  | The page format. One of `letter` \|`legal` \|`tabloid` \|`ledger` \|`a0` \|`a1` \|`a2` \|`a3` \|`a4` \|`a5` \|`a6`.        |
-| landscape           | `boolean`                 | no       | `false` | If `true` the page will be printed in landscape mode.                                                                      |
-| margins             | [MarginsDto](#marginsdto) | no       |         | Custom page margins.                                                                                                       |
-| displayHeaderFooter | `boolean`                 | no       | `true`  | If `true`, display the default header and footer containing e.g. filename and timestamp.                                   |
-| omitBackground      | `boolean`                 | no       | `false` | If `true`, backfground will be omitted.                                                                                    |
-| printBackground     | `boolean`                 | no       | `false` | If `true`, background graphics will be printed.                                                                            |
-| waitForSelector     | `string`                  | no       |         | Wait for the given selector until PDF generation starts.                                                                   |
-| base64              | `boolean`                 | no       | `false` | If `true` the result will be the file content as Base64.                                                                   |
-| filename            | `string`                  | no       |         | If set, the browser will attempt to download the file (only if `base64`=`false`). You probably need to omit the extension. |
+| ------------------- | ------------------------- | :------: | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| url                 | `string`                  |    ✅     |         | The URL of the page to print.                                                                                              |
+| format              | `string`                  |    ❌     | `'a4'`  | The page format. One of `letter` \|`legal` \|`tabloid` \|`ledger` \|`a0` \|`a1` \|`a2` \|`a3` \|`a4` \|`a5` \|`a6`.        |
+| landscape           | `boolean`                 |    ❌     | `false` | If `true` the page will be printed in landscape mode.                                                                      |
+| margins             | [MarginsDto](#marginsdto) |    ❌     |         | Custom page margins.                                                                                                       |
+| displayHeaderFooter | `boolean`                 |    ❌     | `true`  | If `true`, display the default header and footer containing e.g. filename and timestamp.                                   |
+| omitBackground      | `boolean`                 |    ❌     | `false` | If `true`, backfground will be omitted.                                                                                    |
+| printBackground     | `boolean`                 |    ❌     | `false` | If `true`, background graphics will be printed.                                                                            |
+| waitForSelector     | `string`                  |    ❌     |         | Wait for the given selector until PDF generation starts.                                                                   |
+| base64              | `boolean`                 |    ❌     | `false` | If `true` the result will be the file content as Base64.                                                                   |
+| filename            | `string`                  |    ❌     |         | If set, the browser will attempt to download the file (only if `base64`=`false`). You probably need to omit the extension. |
 
 ##### MarginsDto
 | Property | Type                 | Required | Description                                                       |
-| -------- | -------------------- | -------- | ----------------------------------------------------------------- |
-| top      | `string` \| `number` | no       | Top page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).    |
-| bottom   | `string` \| `number` | no       | Bottom page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`). |
-| left     | `string` \| `number` | no       | Left page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).   |
-| right    | `string` \| `number` | no       | Right page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).  |
+| -------- | -------------------- | :------: | ----------------------------------------------------------------- |
+| top      | `string` \| `number` |    ❌     | Top page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).    |
+| bottom   | `string` \| `number` |    ❌     | Bottom page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`). |
+| left     | `string` \| `number` |    ❌     | Left page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).   |
+| right    | `string` \| `number` |    ❌     | Right page margin (e.g. `'2.5cm'` \| `'3%'` \| `'20px'` \| `5`).  |
 
 
 
