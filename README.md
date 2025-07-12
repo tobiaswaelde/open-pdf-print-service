@@ -1,5 +1,9 @@
 # Open PDF Print Service
 
+![Docker Build](https://github.com/tobiaswaelde/open-pdf-print-service/actions/workflows/build.yml/badge.svg)
+![Docker Deploy](https://github.com/tobiaswaelde/open-pdf-print-service/actions/workflows/deploy.yml/badge.svg)
+![Version](https://img.shields.io/github/v/tag/tobiaswaelde/open-pdf-print-service?label=version)
+
 A lightweight service that takes a URL and generates a downloadable PDF file from its rendered content.
 
 ## 📚 Table Of Contents <!-- omit in toc -->

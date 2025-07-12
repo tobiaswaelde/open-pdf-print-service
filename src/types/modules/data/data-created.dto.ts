@@ -1,19 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DataPayload } from '.';
-import { JsonValue } from '@prisma/client/runtime/library';
 
-export class DataDto {
+export class DataCreatedDto {
   @ApiProperty() id: string;
   @ApiProperty() createdAt: Date;
   @ApiProperty() deleteAfterUse: boolean;
-  @ApiProperty() json: JsonValue;
 
-  constructor(partial: Partial<DataDto>) {
+  constructor(partial: Partial<DataCreatedDto>) {
     Object.assign(this, partial);
   }
 
-  public static fromModel(model: DataPayload): DataDto {
+  public static fromModel(model: DataPayload): DataCreatedDto {
     if (!model) return null;
-    return new DataDto({ ...model });
+    return new DataCreatedDto({ ...model });
   }
 }

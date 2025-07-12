@@ -22,6 +22,7 @@ import { DataDto } from '../../types/modules/data/data.dto';
 import { ApiUnauthorizedResponses } from '../../decorators/api-unauthorized-responses.decorator';
 import { TokenAuthGuard } from '../../guards/token-auth.guard';
 import { ApiNotFoundResponses } from '../../decorators/api-not-found-responses.decorator';
+import { DataCreatedDto } from '../../types/modules/data/data-created.dto';
 
 @ApiTags('data')
 @ApiBearerAuth()
@@ -40,10 +41,10 @@ export class DataController {
     description:
       'This method accepts any data type, serializes it to JSON, and stores it in the database. It returns the created data entry.',
   })
-  @ApiCreatedResponse({ description: 'Data entry created successfully.', type: DataDto })
+  @ApiCreatedResponse({ description: 'Data entry created successfully.', type: DataCreatedDto })
   async create(@Body() data: CreateDataDto) {
     const item = await this.dataService.create(data);
-    return DataDto.fromModel(item);
+    return DataCreatedDto.fromModel(item);
   }
 
   @Get('/:id')
