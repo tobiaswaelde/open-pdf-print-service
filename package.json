@@ -10,6 +10,7 @@
   "private": false,
   "license": "MIT",
   "scripts": {
+    "prebuild": "yarn prisma generate",
     "build": "nest build",
     "bundle": "rimraf build && ncc build dist/main.js --out build --minify",
     "postbuild": "yarn run bundle",
