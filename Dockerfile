@@ -32,6 +32,12 @@ FROM node:lts-alpine AS runner
 # install dependencies for healthcheck
 RUN apk update && apk add --no-cache curl
 
+# We don't need the standalone Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+# Install Chromium
+RUN apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
+
 # set working directory
 WORKDIR /app
 
