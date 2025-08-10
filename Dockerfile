@@ -43,7 +43,8 @@ WORKDIR /app
 
 # copy compiled app from builder stage
 COPY --from=builder /app/package.json ./
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
 
 # export application port
 ENV PORT=3001
@@ -53,4 +54,4 @@ EXPOSE $PORT
 HEALTHCHECK CMD sh -c "curl -f http://localhost:$PORT/api/health || exit 1"
 
 # start app
-CMD ["node", "./build/index.js"]
+CMD ["yarn", "start:prod"]
