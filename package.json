@@ -1,6 +1,6 @@
 {
   "name": "open-pdf-print-service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A service for printing PDF documents from URLs",
   "author": {
     "name": "Tobias Wälde",
