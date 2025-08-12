@@ -17,6 +17,7 @@ Whether you're building custom reports, archiving dynamic dashboards, or simply 
   - [Using Docker](#using-docker)
   - [Local Development (Node.js)](#local-development-nodejs)
 - [📡 API Usage](#-api-usage)
+- [Authentication](#authentication)
   - [Data](#data)
   - [PDF Print](#pdf-print)
 - [📦 Changelog](#-changelog)
@@ -83,6 +84,12 @@ node ./build/index.js
 ## 📡 API Usage
 
 The API is documented with Swagger/OpenAPI and can be viewed at: `http://localhost:3001/api`.
+
+## Authentication
+If `API_TOKEN` is set in the environment variables, the `/api/data` and `/api/pdf` endpoints require authentication.
+
+The token must be provided as a query parameter named `token`.
+
 
 ### Data
 Use these endpoints to upload large JSON data that cannot be passed through a query string. This data can then be accessed by the frontend of the rendered page before printing.
